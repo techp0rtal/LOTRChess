@@ -1,4 +1,4 @@
-#I like
+#I like chess and Lord of the Rings.
 
 import pygame
 from pygame.examples.go_over_there import screen
