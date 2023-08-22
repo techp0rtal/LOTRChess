@@ -1,4 +1,5 @@
 #I like chess and Lord of the Rings. This combines them both and makes a fun game! :D
+#This project will heavily use pygame
 
 import pygame
 from pygame.examples.go_over_there import screen
