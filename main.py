@@ -13,7 +13,6 @@ timer = pygame.time.Clock()
 fps = 60
 # game variables and images
 
-
 #main game loop
 run = True
 while run:
