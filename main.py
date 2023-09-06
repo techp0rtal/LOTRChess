@@ -25,6 +25,21 @@ black_locations = [(0,7), (1,7), (2,7), (3,7), (4,7), (5,7), (6,7), (7,7),
                    (0,6), (1,6), (2,6), (3,6), (4,6), (5,6), (6,6), (7,6)]
 captured_pieces_white = []
 captured_pieces_black = []
+'''
+In chess, a turn/move is only "completed" when both players have made their moves. 
+(The only exception to this rule is when White plays a move that ends the game.) 
+So now we create a variable called 'turn_step' which will keep track of the 4 phases of each turn:
+
+0- white's turn, no selection.
+1- white's turn, piece selected.
+2- black's turn, no selection.
+3- black's turn, piece selected.
+
+This variable will have 2 jobs: 
+1. To keep track of which of the 4 phases we are in in the game (and which player is currently active).
+2. To keep track of what valid moves are available on the board (which can be displayed on the board w/dots).
+'''
+
 
 
 #main game loop
@@ -39,4 +54,3 @@ while run:
             run = False
     pygame.display.flip()
 pygame.quit()
-
