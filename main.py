@@ -1,8 +1,10 @@
 #I like chess and Lord of the Rings. This combines them both and makes a fun game! :D
-#This project will heavily use pygame
+# P.S. This project will heavily use pygame
 
+# Step 1: We'll start by making the board itself, and have it pop up with dimensions we specify when you run the program.
 import pygame
-from pygame.examples.go_over_there import screen
+#from pygame.examples.go_over_there import screen
+
 
 pygame.init()
 WIDTH = 1000
@@ -13,6 +15,7 @@ font = pygame.font.Font('freesansbold.ttf', 20)
 big_font = pygame.font.Font('freesansbold.ttf', 50)
 timer = pygame.time.Clock()
 fps = 60
+
 # game variables and images
 white_pieces = ['rook', 'knight', 'bishop', 'king', 'queen', 'bishop', 'knight', 'rook',
                 'pawn', 'pawn','pawn','pawn','pawn','pawn','pawn','pawn']
@@ -39,10 +42,63 @@ This variable will have 2 jobs:
 1. To keep track of which of the 4 phases we are in in the game (and which player is currently active).
 2. To keep track of what valid moves are available on the board (which can be displayed on the board w/dots).
 '''
+turn_step = 0
+'''
+# Now we want a variable for whatever piece is actively selected. When you pick a piece, it wll keep track of what index in that list it is, by storing it in that
+selection variable. And when no piece is selected, we'll just use a large number like 100 bc it's a large enough number that won't be on the board.
+be an actual index.
+'''
+selection = 100
+# Once we select a piece, the variable 'valid_moves' checks the number of valid moves
+valid_moves = []
 
+# load in game piece images, which will be their LOTR versions (king, queen, bishop, knight, rook, pawn)
+#NOTE: make sure the images are square  (that is identical dimensions for both width and height like 1080x1080)
+black_queen = pygame.image.load('Images/black pieces/b queen.jpg')
 
+#Now we scale the images to fit the board tile size. If you want bigger than 80,80, need a bigger board and vice versa
+black_queen = pygame.image.scale(black_queen, (80,80))
 
-#main game loop
+#Now we need an even smaller version, that will be on the side of the game to represent the captured pieces.
+black_queen_small = pygame.image.scale(black_queen, (45,45))
+
+black_king = pygame.image.load('Images/black pieces/b king.jpg')
+black_king = pygame.transform.scale(black_king, (80, 80))
+black_king_small = pygame.transform.scale(black_king, (45, 45))
+black_rook = pygame.image.load('Images/black pieces/b rook.jpg')
+black_rook = pygame.transform.scale(black_rook, (80, 80))
+black_rook_small = pygame.transform.scale(black_rook, (45, 45))
+black_bishop = pygame.image.load('Images/black pieces/b bishop.jpg')
+black_bishop = pygame.transform.scale(black_bishop, (80, 80))
+black_bishop_small = pygame.transform.scale(black_bishop, (45, 45))
+black_knight = pygame.image.load('Images/black pieces/b knight.jpg')
+black_knight = pygame.transform.scale(black_knight, (80, 80))
+black_knight_small = pygame.transform.scale(black_knight, (45, 45))
+black_pawn = pygame.image.load('Images/black pieces/b pawn.jpg')
+black_pawn = pygame.transform.scale(black_pawn, (65, 65))
+black_pawn_small = pygame.transform.scale(black_pawn, (45, 45))
+
+#Now the white pieces. Note: we made pawns' size smaller on purpose.
+white_queen = pygame.image.load('Images/white pieces/w queen.jpg')
+white_queen = pygame.transform.scale(white_queen, (80, 80))
+white_queen_small = pygame.transform.scale(white_queen, (45, 45))
+white_king = pygame.image.load('Images/white pieces/w king.jpg')
+white_king = pygame.transform.scale(white_king, (80, 80))
+white_king_small = pygame.transform.scale(white_king, (45, 45))
+white_rook = pygame.image.load('Images/white pieces/w rook.jpg')
+white_rook = pygame.transform.scale(white_rook, (80, 80))
+white_rook_small = pygame.transform.scale(white_rook, (45, 45))
+white_bishop = pygame.image.load('Images/white pieces/w bishop.jpg')
+white_bishop = pygame.transform.scale(white_bishop, (80, 80))
+white_bishop_small = pygame.transform.scale(white_bishop, (45, 45))
+white_knight = pygame.image.load('Images/white pieces/w knight.jpg')
+white_knight = pygame.transform.scale(white_knight, (80, 80))
+white_knight_small = pygame.transform.scale(white_knight, (45, 45))
+white_pawn = pygame.image.load('Images/white pieces/w pawn.jpg')
+white_pawn = pygame.transform.scale(white_pawn, (65, 65))
+white_pawn_small = pygame.transform.scale(white_pawn, (45, 45))
+
+# main game loop
 run = True
 while run:
     timer.tick(fps)
