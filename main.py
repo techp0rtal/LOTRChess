@@ -57,10 +57,10 @@ valid_moves = []
 black_queen = pygame.image.load('Images/black pieces/b queen.jpg')
 
 #Now we scale the images to fit the board tile size. If you want bigger than 80,80, need a bigger board and vice versa
-black_queen = pygame.image.scale(black_queen, (80,80))
+black_queen = pygame.transform.scale(black_queen, (80,80))
 
 #Now we need an even smaller version, that will be on the side of the game to represent the captured pieces.
-black_queen_small = pygame.image.scale(black_queen, (45,45))
+black_queen_small = pygame.transform.scale(black_queen, (45,45))
 
 black_king = pygame.image.load('Images/black pieces/b king.jpg')
 black_king = pygame.transform.scale(black_king, (80, 80))
@@ -78,7 +78,7 @@ black_pawn = pygame.image.load('Images/black pieces/b pawn.jpg')
 black_pawn = pygame.transform.scale(black_pawn, (65, 65))
 black_pawn_small = pygame.transform.scale(black_pawn, (45, 45))
 
-#Now the white pieces. Note: we made pawns' size smaller on purpose.
+#Now the white pieces. Note: the pawns' size is smaller on purpose.
 white_queen = pygame.image.load('Images/white pieces/w queen.jpg')
 white_queen = pygame.transform.scale(white_queen, (80, 80))
 white_queen_small = pygame.transform.scale(white_queen, (45, 45))
@@ -97,6 +97,28 @@ white_knight_small = pygame.transform.scale(white_knight, (45, 45))
 white_pawn = pygame.image.load('Images/white pieces/w pawn.jpg')
 white_pawn = pygame.transform.scale(white_pawn, (65, 65))
 white_pawn_small = pygame.transform.scale(white_pawn, (45, 45))
+
+'''
+IMPORTANT: When we want to draw our pieces on the board, we will need a list that will
+associate each piece's individual name with it's image by using an index.
+Thus, it is important to keep the order/indexes of each string in piece_list and white_images and black_images
+We'll call it "small_white_images" and "small_black_images"
+'''
+white_images = [white_pawn, white_queen, white_king, white_knight, white_rook, white_bishop]
+small_white_images = [white_pawn_small, white_queen_small, white_king_small, white_knight_small,
+                      white_rook_small, white_bishop_small]
+black_images = [black_pawn, black_queen, black_king, black_knight, black_rook, black_bishop]
+small_black_images = [black_pawn_small, black_queen_small, black_king_small, black_knight_small,
+                      black_rook_small, black_bishop_small]
+piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
+
+#check variables/flashing counter
+
+
+'''
+Now we need a list that is going to be strings for each piece 
+that will have the same index for the image for each piece. 
+'''
 
 # main game loop
 run = True
