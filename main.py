@@ -120,11 +120,58 @@ Now we need a list that is going to be strings for each piece
 that will have the same index for the image for each piece. 
 '''
 
+#time to draw the main game board
+
+def draw_board():
+    for i in range(32):
+        column = i % 4
+        row = i // 4
+        #now we need to offset the rows bc white and black squares change color
+        if row % 2 == 0:
+            pygame.draw.rect(screen, 'light gray', [600 - (column * 200), row * 100, 100, 100])
+            #^^ We need a little space to the right, where our captured pieces can go.
+        else:
+            pygame.draw.rect(screen, 'light gray', [700-(column * 200), row * 100, 100, 100])
+        pygame.draw.rect(screen, 'gray', [0, 800, WIDTH, 100])
+        pygame.draw.rect(screen, 'gold', [0, 800, WIDTH, 100], 5) #this draws the gold rectangle on the bottom of screen
+        pygame.draw.rect(screen, 'gold', [800, 0, 200, HEIGHT], 5) #this draws the gold rectangle on the right
+        status_text = ['White: Select a piece to move!', "White: Select a destination!",
+                    'Black: Select a piece to move!', "Black: Select a destination!",]
+        screen.blit(big_font.render(status_text[turn_step], True, 'black'), (20, 820))
+        for i in range(9): #this will draw lines between our squares to add a nice border.
+            pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 2)  #draws horizontal lines
+            pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)  #draws vertical lines (by inverting the horizontal values)
+
+#Draws pieces out on board
+def draw_pieces():
+    for i in range(len(white_pieces)):
+        index = piece_list.index(white_pieces[i]) #to not what image we need to draw on the screen, we need an index value that will tell us which piece image to use
+        if white_pieces[i] == 'pawn': #we have to do a seperate one for the pawns bc they're different sizes
+            screen.blit(white_pawn, (white_locations[i][0] * 100 + 22, white_locations[i][1] * 100 + 30)) #we need this to center the pawn image since it's smaller
+        else:
+            screen.blit(white_images[index], (white_locations[i][0] * 100 + 10, white_locations[i][1] * 100 + 10))
+        #now let's highlight a piece when it's selected. if turn step < 2, then it's white player's turn. if >= 2, it's black's turn, and we will use blue.
+        if turn_step < 2:
+            if selection == i:
+                pygame.draw.rect(screen, 'red', [white_locations[i][0] * 100 + 1, white_locations[i][1] * 100 + 1, 100, 100], 2) #to test this, set selection = 10
+
+    for i in range(len(black_pieces)):
+        index = piece_list.index(black_pieces[i]) #to not what image we need to draw on the screen, we need an index value that will tell us which piece image to use
+        if black_pieces[i] == 'pawn': #we have to do a seperate one for the pawns bc they're different sizes
+            screen.blit(black_pawn, (black_locations[i][0] * 100 + 22, black_locations[i][1] * 100 + 30)) #we need this to center the pawn image since it's smaller
+        else:
+            screen.blit(black_images[index], (black_locations[i][0] * 100 + 10, black_locations[i][1] * 100 + 10))
+        if turn_step >= 2:
+            if selection == i:
+                pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1, 100, 100], 2)
+
 # main game loop
 run = True
 while run:
     timer.tick(fps)
     screen.fill('dark gray')
+    draw_board()
+    draw_pieces()
 
     #event handling (getting all your inputs, key board, mouse, etc)
     for event in pygame.event.get():
